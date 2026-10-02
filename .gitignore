@@ -1,0 +1,6 @@
+node_modules
+dist
+.cms-local
+src/content/current.json
+.vercel
+.env*
