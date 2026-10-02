@@ -1,5 +1,6 @@
 // TEMPORAL: diagnóstico de arranque (no expone valores de variables)
 export default async function handler(req, res) {
+  if (req.url.includes('direct')) { const m = await import('./login.js'); try { return await m.default(req, res) } catch (e) { res.statusCode = 200; return res.end('THROWN: ' + String(e && e.stack || e)) } }
   const out = { node: process.version, env: { ADMIN_USER: !!process.env.ADMIN_USER, ADMIN_PASSWORD: !!process.env.ADMIN_PASSWORD, BLOB: !!process.env.BLOB_READ_WRITE_TOKEN, VERCEL: process.env.VERCEL }, mods: {} }
   for (const m of ['../server/auth.js', '../server/node.js', '../server/store.js', '../src/content/schema.js', './login.js', './content.js', './upload.js']) {
     try { await import(m); out.mods[m] = 'ok' } catch (e) { out.mods[m] = String(e && e.stack || e).slice(0, 600) }
