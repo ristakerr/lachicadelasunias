@@ -4,13 +4,13 @@ import { triggerDeploy } from '../server/deploy.js'
 import { normalize, DEFAULT } from '../src/content/schema.js'
 
 // Contenido actual para el panel
-export const GET = handler(async () => {
+const GET = handler(async () => {
   const latest = await getLatest()
   return json({ id: latest?.id || 'default', savedAt: latest?.savedAt || null, content: normalize(latest?.content || DEFAULT) })
 })
 
 // Guardar y publicar
-export const POST = handler(async (request) => {
+const POST = handler(async (request) => {
   const body = await request.json().catch(() => null)
   if (!body || typeof body.content !== 'object') return json({ error: 'Datos inválidos' }, 400)
   // si alguien publicó mientras editabas, no pisamos sus cambios sin avisar
@@ -24,3 +24,6 @@ export const POST = handler(async (request) => {
   const deploy = await triggerDeploy().catch((e) => ({ deploy: 'error', detail: e.message }))
   return json({ ok: true, id, content, ...deploy })
 })
+
+import { toNode } from '../server/node.js'
+export default toNode({ GET,POST })

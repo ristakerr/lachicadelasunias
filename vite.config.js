@@ -50,15 +50,7 @@ const devApi = {
       const m = url.pathname.match(/^\/api\/(login|content|upload)$/)
       if (!m) return next()
       const mod = await server.ssrLoadModule(`/api/${m[1]}.js`)
-      const fn = mod[req.method]
-      if (!fn) { res.statusCode = 405; return res.end() }
-      const chunks = []
-      for await (const c of req) chunks.push(c)
-      const request = new Request(url, { method: req.method, headers: req.headers, body: ['GET', 'HEAD'].includes(req.method) ? undefined : Buffer.concat(chunks) })
-      const response = await fn(request)
-      res.statusCode = response.status
-      response.headers.forEach((v, k) => res.setHeader(k, v))
-      res.end(Buffer.from(await response.arrayBuffer()))
+      return mod.default(req, res)
     })
   },
 }

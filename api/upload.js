@@ -5,7 +5,7 @@ const MAX = 4 * 1024 * 1024 // el panel achica las fotos antes de subirlas; esto
 const MAGIC = { 'image/jpeg': [0xff, 0xd8, 0xff], 'image/png': [0x89, 0x50, 0x4e, 0x47], 'image/webp': [0x52, 0x49, 0x46, 0x46] }
 
 // Sube una foto (el cuerpo del pedido es la imagen tal cual)
-export const POST = handler(async (request) => {
+const POST = handler(async (request) => {
   const type = (request.headers.get('content-type') || '').split(';')[0]
   if (!MAGIC[type]) return json({ error: 'Solo se aceptan fotos JPG, PNG o WebP' }, 415)
   const bytes = Buffer.from(await request.arrayBuffer())
@@ -14,3 +14,6 @@ export const POST = handler(async (request) => {
   const url = await saveImage(bytes, type)
   return json({ url })
 })
+
+import { toNode } from '../server/node.js'
+export default toNode({ POST })
