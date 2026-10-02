@@ -35,7 +35,7 @@ Las fotos se achican en el navegador (máx. 1600 px) antes de subirse. Se guarda
 | `src/content/default.js` | Contenido inicial (se usa hasta la primera publicación) |
 | `src/content/schema.js` | Valida y limpia lo que llega del panel |
 | `scripts/pull-content.mjs` | Antes del build, baja la última versión publicada a `src/content/current.json` |
-| `api/login.js`, `api/content.js`, `api/upload.js` | Funciones serverless del panel |
+| `api/auth.js`, `api/content.js`, `api/upload.js` | Funciones serverless del panel |
 | `server/` | Login con cookie firmada, almacenamiento (Blob o carpeta local) y deploy hook |
 | `src/admin/` | El panel |
 

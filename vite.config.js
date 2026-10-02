@@ -47,7 +47,7 @@ const devApi = {
         if (!file.startsWith(join(process.cwd(), '.cms-local')) || !existsSync(file)) return next()
         return createReadStream(file).pipe(res)
       }
-      const m = url.pathname.match(/^\/api\/(login|content|upload)$/)
+      const m = url.pathname.match(/^\/api\/(auth|content|upload)$/)
       if (!m) return next()
       const mod = await server.ssrLoadModule(`/api/${m[1]}.js`)
       return mod.default(req, res)

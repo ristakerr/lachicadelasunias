@@ -181,7 +181,7 @@ function Login({ onOk, note }) {
   const [busy, setBusy] = useState(false)
   const go = async (e) => {
     e.preventDefault(); setBusy(true); setErr('')
-    try { await postJson('login', { user, password: pw }); onOk() } catch (x) { setErr(x.message) }
+    try { await postJson('auth', { user, password: pw }); onOk() } catch (x) { setErr(x.message) }
     setBusy(false)
   }
   return (
@@ -225,7 +225,7 @@ export default function Admin() {
   const dirtyRef = useRef(false); dirtyRef.current = dirty
 
   useEffect(() => {
-    api('login').then((d) => setAuth(d.logged ? 'in' : 'out')).catch((x) => { setAuth('out'); setAuthNote(x.message) })
+    api('auth').then((d) => setAuth(d.logged ? 'in' : 'out')).catch((x) => { setAuth('out'); setAuthNote(x.message) })
     const out = () => { setAuth('out'); setAuthNote('Tu sesión venció. Entrá de nuevo: tus cambios siguen acá.') }
     window.addEventListener('unias:logout', out)
     return () => window.removeEventListener('unias:logout', out)
@@ -291,7 +291,7 @@ export default function Admin() {
 
   const logout = async () => {
     if (dirty && !confirm('Tenés cambios sin publicar. ¿Salir igual?')) return
-    await api('login', { method: 'DELETE' }).catch(() => {})
+    await api('auth', { method: 'DELETE' }).catch(() => {})
     setC(null); setSaved(null); setAuthNote(''); setAuth('out')
   }
 
