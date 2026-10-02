@@ -5,7 +5,7 @@ import { createHmac, timingSafeEqual, createHash } from 'node:crypto'
 
 const COOKIE = 'unias_s'
 const DAYS = 14
-const DEV_PASSWORD = 'unias-local'
+const DEV_PASSWORD = 'palta'
 
 export function password() {
   const p = process.env.ADMIN_PASSWORD
@@ -14,14 +14,17 @@ export function password() {
   return DEV_PASSWORD // solo en tu compu, para probar
 }
 
-const key = () => createHash('sha256').update(`unias|${password()}|${process.env.SESSION_SECRET || ''}`).digest()
+const key = () => createHash('sha256').update(`unias|${username()}|${password()}|${process.env.SESSION_SECRET || ''}`).digest()
 const sign = (v) => createHmac('sha256', key()).update(v).digest('base64url')
 const same = (a, b) => { const x = Buffer.from(a), y = Buffer.from(b); return x.length === y.length && timingSafeEqual(x, y) }
 
-export function checkPassword(input) {
-  const a = createHash('sha256').update(String(input || '')).digest()
-  const b = createHash('sha256').update(password()).digest()
-  return timingSafeEqual(a, b)
+const username = () => process.env.ADMIN_USER || (process.env.VERCEL ? '' : 'paolapalma')
+
+export function checkPassword(user, input) {
+  const h = (v) => createHash('sha256').update(String(v || '')).digest()
+  const okUser = timingSafeEqual(h(String(user || '').trim().toLowerCase()), h(username().toLowerCase()))
+  const okPass = timingSafeEqual(h(input), h(password()))
+  return okUser && okPass
 }
 
 export function sessionCookie(request) {

@@ -9,9 +9,9 @@ export const GET = handler(async (request) => {
 // Entrar
 export const POST = handler(async (request) => {
   const body = await request.json().catch(() => ({}))
-  if (!checkPassword(body.password)) {
+  if (!checkPassword(body.user, body.password)) {
     await new Promise((r) => setTimeout(r, 900)) // frena intentos a lo bruto
-    return json({ error: 'Contraseña incorrecta' }, 401)
+    return json({ error: 'Usuario o contraseña incorrectos' }, 401)
   }
   return json({ ok: true }, 200, { 'set-cookie': sessionCookie(request) })
 }, { auth: false })

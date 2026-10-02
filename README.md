@@ -21,7 +21,7 @@ Las fotos se achican en el navegador (máx. 1600 px) antes de subirse. Se guarda
 1. **Blob**: en el proyecto, *Storage → Create Database → Blob*. Elegí acceso **Public** y conectalo al proyecto.
    Vercel crea solo la variable `BLOB_READ_WRITE_TOKEN`.
 2. **Variables** (*Settings → Environment Variables*, entorno Production):
-   - `ADMIN_PASSWORD`: la contraseña del panel. Usá una larga (12+ caracteres).
+   - `ADMIN_USER` y `ADMIN_PASSWORD`: usuario y contraseña del panel.
    - `SITE_URL`: `https://lachicadelasunias.com`
    - `SESSION_SECRET` (opcional): cualquier texto largo al azar; cambiarlo cierra todas las sesiones.
 3. **Deploy Hook**: *Settings → Git → Deploy Hooks*. Nombre `panel`, rama `main`. Copiá la URL y guardala como variable `DEPLOY_HOOK_URL`.
@@ -41,7 +41,7 @@ Las fotos se achican en el navegador (máx. 1600 px) antes de subirse. Se guarda
 
 ## Probar el panel en tu compu
 
-`npm run dev` y abrí `http://localhost:5173/unias.html`. Sin variables configuradas, la contraseña es `unias-local`
+`npm run dev` y abrí `http://localhost:5173/unias.html`. Sin variables configuradas, el usuario es `paolapalma` y la contraseña `palta`
 y todo se guarda en la carpeta `.cms-local/` (no se sube a Git). Al publicar, la página de prueba se actualiza sola.
 
 ## Seguridad

@@ -175,12 +175,13 @@ function PhotoPicker({ value, onChange, library, onAdd, label }) {
 
 /* ---------- login ---------- */
 function Login({ onOk, note }) {
+  const [user, setUser] = useState('')
   const [pw, setPw] = useState('')
   const [err, setErr] = useState('')
   const [busy, setBusy] = useState(false)
   const go = async (e) => {
     e.preventDefault(); setBusy(true); setErr('')
-    try { await postJson('login', { password: pw }); onOk() } catch (x) { setErr(x.message) }
+    try { await postJson('login', { user, password: pw }); onOk() } catch (x) { setErr(x.message) }
     setBusy(false)
   }
   return (
@@ -189,11 +190,14 @@ function Login({ onOk, note }) {
         <p className="brand">La chica de las uñas</p>
         <h1>Panel</h1>
         {note && <p className="note">{note}</p>}
+        <label className="f"><span className="f-l">Usuario</span>
+          <span className="f-in"><input autoComplete="username" autoCapitalize="none" autoCorrect="off" spellCheck="false" value={user} onChange={(e) => setUser(e.target.value)} autoFocus /></span>
+        </label>
         <label className="f"><span className="f-l">Contraseña</span>
-          <span className="f-in"><input type="password" autoComplete="current-password" value={pw} onChange={(e) => setPw(e.target.value)} autoFocus /></span>
+          <span className="f-in"><input type="password" autoComplete="current-password" value={pw} onChange={(e) => setPw(e.target.value)} /></span>
         </label>
         {err && <p className="err">{err}</p>}
-        <button className="btn" disabled={!pw || busy}>{busy ? 'Entrando…' : 'Entrar'}</button>
+        <button className="btn" disabled={!user || !pw || busy}>{busy ? 'Entrando…' : 'Entrar'}</button>
       </form>
     </main>
   )
