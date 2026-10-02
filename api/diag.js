@@ -7,7 +7,8 @@ export default async function handler(req, res) {
   try {
     const { default: login } = await import('./login.js')
     const fake = { statusCode: 0, h: {}, setHeader(k, v) { this.h[k] = v }, end(b) { this.body = String(b) } }
-    await login({ method: 'GET', url: '/api/login', headers: { host: req.headers.host } }, fake)
+    await login(req, fake)
+    out.headerNames = Object.keys(req.headers)
     out.loginGet = { status: fake.statusCode, body: fake.body }
   } catch (e) { out.loginGet = String(e && e.stack || e).slice(0, 800) }
   res.setHeader('content-type', 'application/json')
