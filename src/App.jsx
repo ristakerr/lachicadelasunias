@@ -62,7 +62,7 @@ export default function App() {
       walk(root)
       root.dataset.split = '1'
     }
-    document.querySelectorAll('.hero .lead, .sec > .sub, .band p, .book > div:first-child > p').forEach((el) => { if (!el.dataset.split) splitWords(el) });
+    document.querySelectorAll('.hero .lead').forEach((el) => { if (!el.dataset.split) splitWords(el) });
 
     // Inicio: el texto del hero aparece solo, sin esperar al scroll
     [['.hero .row', 1100, 0], ['.hero-photos .hp', 300, 160], ['.hero-photos .chip', 1300, 200]].forEach(([sel, base, step]) =>
@@ -102,29 +102,14 @@ export default function App() {
 
   // Movimiento ligado al scroll (parallax). Respeta "reducir movimiento" del sistema
   useEffect(() => {
-    document.querySelectorAll('.sec > h2').forEach((el) => el.setAttribute('data-speed', '0.05'))
-    document.querySelectorAll('.band h2').forEach((el) => el.setAttribute('data-speed', '-0.06'))
-    document.querySelectorAll('.promo').forEach((el, i) => el.setAttribute('data-speed', ['0.07', '-0.05', '0.07'][i % 3]))
-    document.querySelector('.book > div')?.setAttribute('data-speed', '0.04')
-    document.querySelector('.book form')?.setAttribute('data-speed', '-0.04')
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     const els = [...document.querySelectorAll('[data-speed],[data-hero],[data-x]')]
-    // Fading entre secciones: cada bloque entra y sale con opacidad según su posición en pantalla
-    const blocks = [...document.querySelectorAll('main > *')]
-    const FADE = 0.42
-    const smooth = (t) => { t = Math.min(1, Math.max(0, t)); return t * t * (3 - 2 * t) }
     let raf = 0
     const update = () => {
       raf = 0
       const vh = window.innerHeight, y = window.scrollY
       const flat = window.innerWidth <= 820 // en celular el parallax desordena las tarjetas apiladas
       document.documentElement.style.setProperty('--p', (y / Math.max(1, document.documentElement.scrollHeight - vh)).toFixed(3))
-      blocks.forEach((el) => {
-        const r = el.getBoundingClientRect()
-        const zone = vh * FADE
-        const o = Math.min(smooth((vh - r.top) / zone), smooth(r.bottom / zone))
-        el.style.opacity = o.toFixed(3)
-      })
       els.forEach((el) => {
         if (el.dataset.hero) {
           const py = y < vh * 1.3 ? y * parseFloat(el.dataset.hero) : 0
@@ -146,12 +131,11 @@ export default function App() {
     update()
     window.addEventListener('scroll', onScroll, { passive: true })
     window.addEventListener('resize', onScroll)
-    return () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); cancelAnimationFrame(raf); blocks.forEach((el) => { el.style.opacity = '' }) }
+    return () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); cancelAnimationFrame(raf) }
   }, [])
 
   const [f, setF] = useState({ nombre: '', servicio: '', fecha: '', turno: '' })
   const set = (k) => (e) => setF({ ...f, [k]: e.target.value })
-  const ok = f.nombre && f.servicio
 
   // menú hamburguesa: se cierra con Escape, al pasar a escritorio y al elegir un enlace
   const [menu, setMenu] = useState(false)
@@ -226,7 +210,7 @@ export default function App() {
         <h2 className="hd">Lo que nos define</h2>
         <div className="grid4">
           {ESENCIA.map((x, i) => (
-            <article key={i} className="card" data-speed={[0.06, -0.04, 0.09, -0.02][i % 4]} style={{ '--img': `url("${x.img}")` }}>
+            <article key={i} className="card" style={{ '--img': `url("${x.img}")` }}>
               <svg className="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.2 6.8L21 11l-6.8 2.2L12 20l-2.2-6.8L3 11l6.8-2.2z" /></svg>
               <h3>{x.t}</h3>
               <p>{x.d}</p>
@@ -300,7 +284,7 @@ export default function App() {
             </dl>
           </div>
           <form onSubmit={enviar}>
-            <label>Nombre<input value={f.nombre} onChange={set('nombre')} required /></label>
+            <label>Nombre<input value={f.nombre} onChange={set('nombre')} autoComplete="given-name" required /></label>
             <label>Servicio
               <select value={f.servicio} onChange={set('servicio')} required>
                 <option value="">Elegí una opción</option>
@@ -317,7 +301,7 @@ export default function App() {
                 </select>
               </label>
             </div>
-            <button className="btn" disabled={!ok}>Reservar por WhatsApp</button>
+            <button className="btn">Reservar por WhatsApp</button>
           </form>
         </div>
       </section>
