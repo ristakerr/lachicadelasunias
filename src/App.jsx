@@ -14,14 +14,9 @@ const AUTORIDAD = C.autoridad
 const OPINIONES = C.opiniones
 const GALERIA = C.galeria
 
-const SPARK = 'M12 2l2.2 6.8L21 11l-6.8 2.2L12 20l-2.2-6.8L3 11l6.8-2.2z'
 const STAR = 'M12 2.5l2.9 6.4 7 .7-5.3 4.7 1.6 6.9L12 17.6l-6.2 3.6 1.6-6.9L2.1 9.6l7-.7z'
-const Sparkle = () => <svg className="sp-i" viewBox="0 0 24 24" aria-hidden="true"><path d={SPARK} /></svg>
 const Stars = () => <span className="stars" aria-hidden="true">{[0, 1, 2, 3, 4].map((i) => <svg key={i} viewBox="0 0 24 24"><path d={STAR} /></svg>)}</span>
-const CINTA = [['Semipermanente', 'Capping gel', 'Eventos', 'Color'], ['Prolijidad', 'Diseño', 'Brillo', 'Turnos']]
-const Cinta = ({ words, x }) => (
-  <span data-x={x}>{[0, 1, 2, 3].flatMap((r) => words.map((w) => <Fragment key={`${r}-${w}`}>{w}<Sparkle /></Fragment>))}</span>
-)
+const DESDE = money(Math.min(...C.promos.map((p) => p.price)))
 
 const NAV = [['#promos', 'Promos'], ['#galeria', 'Galería'], ['#opiniones', 'Opiniones'], ['#eventos', 'Eventos']]
 function Row({ rev }) {
@@ -65,16 +60,15 @@ export default function App() {
     document.querySelectorAll('.hero .lead').forEach((el) => { if (!el.dataset.split) splitWords(el) });
 
     // Inicio: el texto del hero aparece solo, sin esperar al scroll
-    [['.hero .row', 1100, 0], ['.hero-photos .hp', 300, 160], ['.hero-photos .chip', 1300, 200]].forEach(([sel, base, step]) =>
+    [['.hero .row', 700, 0], ['.hero-photos .hp', 200, 120]].forEach(([sel, base, step]) =>
       document.querySelectorAll(sel).forEach((el, i) => { el.style.transitionDelay = `${base + i * step}ms` }))
     const heroT = setTimeout(() => document.querySelectorAll('.hero h1, .hero .lead, .hero .reveal').forEach((el) => el.classList.add('in')), 120)
     const groups = [
-      ['.sec > :not(.grid3):not(.grid4), .band > :not(.bg-word):not(.btn)', 0, null],
+      ['.sec > :not(.menu):not(.bento):not(.revs), .band > :not(.btn)', 0, null],
       ['.book', 0, () => 'r-zoom'],
-      ['.card', 90, null],
-      ['.rev', 90, null],
-      ['.stat', 90, null],
-      ['.promo', 110, (i) => ['r-left', 'r-zoom', 'r-right'][i % 3]],
+      ['.card', 70, null],
+      ['.rev', 70, null],
+      ['.item', 70, null],
       ['.book > div:first-child', 0, () => 'r-left'],
       ['.book form', 0, () => 'r-right'],
       ['.book form > label, .book form > .two', 70, null],
@@ -96,7 +90,7 @@ export default function App() {
     }))
     // pausa animaciones infinitas fuera de pantalla (rendimiento)
     const vis = new IntersectionObserver((es) => es.forEach((e) => e.target.classList.toggle('off', !e.isIntersecting)))
-    document.querySelectorAll('.hero, .marquee').forEach((el) => vis.observe(el))
+    document.querySelectorAll('.marquee').forEach((el) => vis.observe(el))
     return () => { clearTimeout(heroT); io.disconnect(); vis.disconnect() }
   }, [])
 
@@ -169,49 +163,33 @@ export default function App() {
 
       <main>
       <section className="hero" id="top">
-        {[1, 2, 3, 4, 5].map((n) => (
-          <svg key={n} className={`spark s${n}`} viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.2 6.8L21 11l-6.8 2.2L12 20l-2.2-6.8L3 11l6.8-2.2z" /></svg>
-        ))}
         <div className="hero-in" data-hero="0.3" data-fade="1">
           <p className="kicker reveal">{C.hero.kicker}</p>
           <h1 className="hd">{emphasis(C.hero.titulo).map((x, i) => (x.em ? <em key={i}>{x.t}</em> : <Fragment key={i}>{x.t}</Fragment>))}</h1>
           <p className="lead">{C.hero.texto}</p>
           <div className="row reveal">
             <a className="btn" href="#reserva">Reservar turno</a>
-            <a className="btn btn-ghost" href="#promos">Ver promos</a>
+            <a className="btn btn-ghost" href="#promos">Ver promos desde {DESDE}</a>
           </div>
         </div>
         <div className="hero-photos" aria-hidden="true" data-hero="0.12">
           {C.hero.fotos.map((src, i) => <img key={i} className={`hp hp${i + 1} reveal r-zoom`} src={src} alt="" />)}
-          <span className="chip c1 reveal"><Sparkle />{C.hero.chip}</span>
-          <span className="chip c2 reveal">{PROMOS[0].name} <b>{PROMOS[0].price}</b></span>
         </div>
       </section>
 
-      <div className="strip">
-        {C.franja.map((t, i) => <span key={i}>{t}</span>)}
-        <a href={`https://wa.me/${WA}`}>{TEL}</a>
-      </div>
-
-      <section className="sec proof" aria-label="Experiencia y reconocimiento">
-        <div className="grid3 stats">
+      <section className="proof" aria-label="Experiencia y reconocimiento">
+        <ul>
           {AUTORIDAD.map((x, i) => (
-            <div key={i} className="stat">
-              <strong>{x.n}</strong>
-              <span className="stat-t">{x.t}</span>
-              {x.stars && <Stars />}
-              <span className="stat-d">{x.d}</span>
-            </div>
+            <li key={i}><strong>{x.n}</strong> <span>{x.t}</span>{x.stars && <Stars />}</li>
           ))}
-        </div>
+        </ul>
       </section>
 
       <section className="sec">
         <h2 className="hd">Lo que nos define</h2>
-        <div className="grid4">
+        <div className={`bento n${Math.min(ESENCIA.length, 5)}`}>
           {ESENCIA.map((x, i) => (
             <article key={i} className="card" style={{ '--img': `url("${x.img}")` }}>
-              <svg className="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.2 6.8L21 11l-6.8 2.2L12 20l-2.2-6.8L3 11l6.8-2.2z" /></svg>
               <h3>{x.t}</h3>
               <p>{x.d}</p>
             </article>
@@ -219,25 +197,21 @@ export default function App() {
         </div>
       </section>
 
-      <div className="ribbon" aria-hidden="true">
-        <Cinta words={CINTA[0]} x="0.35" />
-        <Cinta words={CINTA[1]} x="-0.35" />
-      </div>
-
       <section className="sec sec-soft" id="promos">
         <h2 className="hd">Promos de uñas</h2>
         <p className="sub">{C.promosIntro}</p>
-        <div className="grid3">
+        <ul className="menu">
           {PROMOS.map((p, i) => (
-            <article key={i} className={`promo ${p.star ? 'star' : ''}`}>
-              {p.star && <span className="tag">La más pedida</span>}
-              <h3>{p.name}</h3>
-              <p>{p.desc}</p>
+            <li key={i} className={`item${p.star ? ' star' : ''}`}>
+              <div className="item-t">
+                <h3>{p.name}{p.star && <span className="tag">La más pedida</span>}</h3>
+                <p>{p.desc}</p>
+              </div>
               <strong>{p.price}</strong>
-              <a className="btn btn-sm" href="#reserva" onClick={() => setF({ ...f, servicio: `${p.name} (${p.price})` })}>Elegir</a>
-            </article>
+              <a className={`btn btn-sm${p.star ? '' : ' btn-ghost'}`} href="#reserva" aria-label={`Elegir ${p.name}`} onClick={() => setF({ ...f, servicio: `${p.name} (${p.price})` })}>Elegir</a>
+            </li>
           ))}
-        </div>
+        </ul>
       </section>
 
       <section className="sec sec-wide" id="galeria">
@@ -253,10 +227,9 @@ export default function App() {
             <b>{C.rating.score}</b><Stars /><span>{C.rating.count} opiniones en Google</span>
           </a>
         </div>
-        <div className="grid3 revs">
+        <div className="revs">
           {OPINIONES.map((o, i) => (
-            <figure key={i} className="rev">
-              <Stars />
+            <figure key={i} className={`rev${i === 0 ? ' lead-q' : ''}`}>
               <blockquote><p>{o.q}</p></blockquote>
               <figcaption><b>{o.n}</b><span>{o.m}</span></figcaption>
             </figure>
@@ -266,7 +239,6 @@ export default function App() {
       </section>
 
       <section className="band" id="eventos">
-        <span className="bg-word" data-speed="-0.18" aria-hidden="true">UÑAS</span>
         <h2 className="hd">{C.eventos.titulo}</h2>
         <p>{C.eventos.texto}</p>
         <a className="btn" href={`https://wa.me/${WA}?text=${encodeURIComponent(C.eventos.mensaje)}`}>{C.eventos.boton}</a>
