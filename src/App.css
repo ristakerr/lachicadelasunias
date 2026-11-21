@@ -1,8 +1,8 @@
-/* Archivo en dos anchos: expandida y pesada para títulos, normal para texto. Un solo archivo variable. Los "fallback" ajustan Arial a sus medidas para que la página no salte cuando carga la fuente */
+/* Archivo: pesada para títulos, normal para texto. Un solo archivo variable. Los "fallback" ajustan Arial a sus medidas para que la página no salte cuando carga la fuente */
 @font-face{font-family:'Archivo Fallback';src:local('Arial'),local('Helvetica'),local('Liberation Sans');size-adjust:97.9%;ascent-override:89.7%;descent-override:21.5%;line-gap-override:0%}
-@font-face{font-family:'Archivo Display Fallback';src:local('Arial Bold'),local('Arial'),local('Helvetica'),local('Liberation Sans');font-weight:400 900;size-adjust:114.8%;ascent-override:76.5%;descent-override:18.3%;line-gap-override:0%}
+@font-face{font-family:'Archivo Display Fallback';src:local('Arial Bold'),local('Arial'),local('Helvetica'),local('Liberation Sans');font-weight:400 900;size-adjust:104%;ascent-override:84.4%;descent-override:20.2%;line-gap-override:0%}
 :root{--ink:#4a2f3d;--pink:#a34c6b;--rose:#e8b9c8;--blush:#f8ebee;--paper:#fdf8f6;--mute:#725c68;--line:#f0dbe1;
---display:'Archivo Variable','Archivo Display Fallback',system-ui,sans-serif;--sans:'Archivo Variable','Archivo Fallback',system-ui,sans-serif;--wide:112%;
+--display:'Archivo Variable','Archivo Display Fallback',system-ui,sans-serif;--sans:'Archivo Variable','Archivo Fallback',system-ui,sans-serif;--wide:100%;
 --x:5vw;--sec:clamp(4.5rem,9vw,8rem);--gap:clamp(1rem,2vw,1.6rem);--ease:cubic-bezier(.23,1,.32,1);--soft:0 18px 44px rgba(184,92,126,.12)}
 *{box-sizing:border-box;margin:0}
 html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
@@ -13,8 +13,8 @@ a,button,select,label{touch-action:manipulation}
 .btn,.burger,.nav nav a{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 main{overflow-x:clip}
 :focus-visible{outline:3px solid var(--pink);outline-offset:3px}
-h1,h2,h3{font-family:var(--display);font-stretch:var(--wide);font-weight:780;line-height:1.06;letter-spacing:-.022em;text-wrap:balance}
-h3{font-weight:720;line-height:1.15;letter-spacing:-.012em}
+h1,h2,h3{font-family:var(--display);font-stretch:var(--wide);font-weight:800;line-height:1.12;letter-spacing:-.012em;text-wrap:balance}
+h3{font-weight:700;line-height:1.2;letter-spacing:-.005em}
 p{text-wrap:pretty}
 .btn{display:inline-block;background:var(--pink);color:#fff;border:0;border-radius:999px;padding:.9rem 1.8rem;font:600 .98rem var(--sans);letter-spacing:.005em;text-decoration:none;cursor:pointer;transition:transform .16s var(--ease),background-color .15s ease,color .15s ease}
 @media(hover:hover) and (pointer:fine){.btn:hover{background:#8f3f5d}}
@@ -27,7 +27,7 @@ p{text-wrap:pretty}
 .row{display:flex;gap:.9rem;flex-wrap:wrap}
 
 .nav{position:fixed;inset:0 0 auto 0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:calc(.8rem + env(safe-area-inset-top,0px)) max(var(--x),env(safe-area-inset-right,0px)) .8rem max(var(--x),env(safe-area-inset-left,0px));background:var(--paper);border-bottom:1px solid var(--line);color:var(--ink)}
-.logo{font:800 1.12rem var(--display);font-stretch:var(--wide);letter-spacing:-.025em;text-decoration:none}
+.logo{font:800 1.12rem var(--display);font-stretch:var(--wide);letter-spacing:-.008em;text-decoration:none}
 .nav nav{display:flex;gap:1.7rem;align-items:center;font-size:.9rem}
 .nav nav a{text-decoration:none}
 .nav nav a:not(.btn){color:var(--mute);transition:color .15s ease}
@@ -60,7 +60,7 @@ p{text-wrap:pretty}
 .w{display:inline-block;transition:opacity .5s var(--ease),transform .5s var(--ease);transition-delay:calc(.15s + var(--i,0) * 20ms)}
 :where(.js) .hero:not(.in) .w{opacity:0;transform:translateY(.28em)}
 .kicker{color:var(--pink);font-size:1rem;font-weight:600;margin-bottom:1.2rem}
-.hero h1{font-size:clamp(2.4rem,5.4vw,4.3rem);font-weight:850;line-height:1.05;letter-spacing:-.028em;margin-bottom:1.4rem}
+.hero h1{font-size:clamp(2.5rem,5.8vw,4.6rem);font-weight:800;line-height:1.08;letter-spacing:-.018em;margin-bottom:1.4rem}
 .hero em{color:var(--pink);font-style:normal}
 .lead{max-width:42ch;color:var(--mute);margin-bottom:2.2rem;font-size:clamp(1.06rem,1.3vw,1.2rem);line-height:1.55}
 
@@ -71,7 +71,7 @@ p{text-wrap:pretty}
 .hp3{width:36%;height:56%;right:0;top:34%}
 
 .sec{padding:var(--sec) var(--x);max-width:1240px;margin:auto}
-.sec h2,.band h2{font-size:clamp(1.9rem,4vw,3rem);letter-spacing:-.025em;margin-bottom:1rem}
+.sec h2,.band h2{font-size:clamp(2rem,4.2vw,3.1rem);letter-spacing:-.016em;margin-bottom:1rem}
 .band h2{text-align:center}
 .sec h2.left{text-align:left}
 .sub{color:var(--mute);margin:0 0 2.5rem;max-width:52ch}
@@ -128,7 +128,7 @@ input:user-invalid,select:user-invalid{border-color:#b3261e}
 form .btn{margin-top:.4rem}
 .foot{background:var(--blush);color:var(--mute);font-size:.92rem;padding:clamp(2.5rem,6vw,4rem) var(--x) max(1.6rem,env(safe-area-inset-bottom,0px))}
 .foot-in{max-width:1240px;margin:auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1.3fr;gap:2rem clamp(1.5rem,4vw,3rem)}
-.foot-logo{font:800 1.25rem var(--display);font-stretch:var(--wide);letter-spacing:-.02em;color:var(--ink);margin-bottom:.6rem}
+.foot-logo{font:800 1.25rem var(--display);font-stretch:var(--wide);letter-spacing:-.008em;color:var(--ink);margin-bottom:.6rem}
 .foot-h{font:700 1rem var(--display);font-stretch:var(--wide);color:var(--ink);margin-bottom:.8rem}
 .foot ul{list-style:none;padding:0;display:grid;gap:.5rem}
 .foot address{font-style:normal}.foot address p{margin-bottom:.8rem}
