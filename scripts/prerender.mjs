@@ -12,8 +12,8 @@ try {
   const page = await readFile(file, 'utf-8')
   const marca = '<div id="root"></div>'
   if (!page.includes(marca)) throw new Error('No encontré ' + marca + ' en dist/index.html')
-  // precarga las dos fuentes (solo el subconjunto latino) para que los títulos no aparezcan con la fuente de reemplazo
-  const fuentes = (await readdir(new URL('../dist/assets/', import.meta.url))).filter((f) => /^funnel-(display|sans)-latin-wght-normal-.*\.woff2$/.test(f))
+  // precarga la fuente (solo el subconjunto latino) para que los títulos no aparezcan con la fuente de reemplazo
+  const fuentes = (await readdir(new URL('../dist/assets/', import.meta.url))).filter((f) => /^archivo-latin-wdth-normal-.*\.woff2$/.test(f))
   const precarga = fuentes.map((f) => `<link rel="preload" href="/assets/${f}" as="font" type="font/woff2" crossorigin />`).join('')
   await writeFile(file, page.replace('</head>', `${precarga}</head>`).replace(marca, `<div id="root">${html}</div>`))
   const hoy = new Date().toISOString().slice(0, 10)

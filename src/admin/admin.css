@@ -1,12 +1,12 @@
-/* Funnel Display (títulos) + Funnel Sans (texto): misma familia, dos cortes. Los "fallback" ajustan Arial a sus medidas para que la página no salte cuando carga la fuente */
-@font-face{font-family:'Funnel Sans Fallback';src:local('Arial'),local('Helvetica'),local('Liberation Sans');size-adjust:99.6%;ascent-override:100.4%;descent-override:25.1%;line-gap-override:0%}
-@font-face{font-family:'Funnel Display Fallback';src:local('Arial Bold'),local('Arial'),local('Helvetica'),local('Liberation Sans');font-weight:400 800;size-adjust:100.3%;ascent-override:99.7%;descent-override:24.9%;line-gap-override:0%}
+/* Archivo en dos anchos: expandida y pesada para títulos, normal para texto. Un solo archivo variable. Los "fallback" ajustan Arial a sus medidas para que la página no salte cuando carga la fuente */
+@font-face{font-family:'Archivo Fallback';src:local('Arial'),local('Helvetica'),local('Liberation Sans');size-adjust:97.9%;ascent-override:89.7%;descent-override:21.5%;line-gap-override:0%}
+@font-face{font-family:'Archivo Display Fallback';src:local('Arial Bold'),local('Arial'),local('Helvetica'),local('Liberation Sans');font-weight:400 900;size-adjust:114.8%;ascent-override:76.5%;descent-override:18.3%;line-gap-override:0%}
 :root{--ink:#4a2f3d;--pink:#b85c7e;--rose:#e8b9c8;--blush:#f8ebee;--paper:#fdf8f6;--mute:#86707b;--line:#f0dbe1;--ok:#3f7d5c;--bad:#b3413b;
---display:'Funnel Display Variable','Funnel Display Fallback',system-ui,sans-serif;--sans:'Funnel Sans Variable','Funnel Sans Fallback',system-ui,sans-serif;--x:clamp(1rem,4vw,2rem)}
+--display:'Archivo Variable','Archivo Display Fallback',system-ui,sans-serif;--sans:'Archivo Variable','Archivo Fallback',system-ui,sans-serif;--wide:112%;--x:clamp(1rem,4vw,2rem)}
 *{box-sizing:border-box;margin:0}
 html{scroll-behavior:smooth;scroll-padding-top:8.5rem}
 body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
-h1,h2{font-family:var(--display);font-weight:600;letter-spacing:-.02em;line-height:1.1}
+h1,h2{font-family:var(--display);font-stretch:var(--wide);font-weight:780;letter-spacing:-.02em;line-height:1.1}
 a{color:var(--pink)}
 button{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--pink);outline-offset:2px}

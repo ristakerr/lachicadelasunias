@@ -1,8 +1,8 @@
-/* Funnel Display (títulos) + Funnel Sans (texto): misma familia, dos cortes. Los "fallback" ajustan Arial a sus medidas para que la página no salte cuando carga la fuente */
-@font-face{font-family:'Funnel Sans Fallback';src:local('Arial'),local('Helvetica'),local('Liberation Sans');size-adjust:99.6%;ascent-override:100.4%;descent-override:25.1%;line-gap-override:0%}
-@font-face{font-family:'Funnel Display Fallback';src:local('Arial Bold'),local('Arial'),local('Helvetica'),local('Liberation Sans');font-weight:400 800;size-adjust:100.3%;ascent-override:99.7%;descent-override:24.9%;line-gap-override:0%}
+/* Archivo en dos anchos: expandida y pesada para títulos, normal para texto. Un solo archivo variable. Los "fallback" ajustan Arial a sus medidas para que la página no salte cuando carga la fuente */
+@font-face{font-family:'Archivo Fallback';src:local('Arial'),local('Helvetica'),local('Liberation Sans');size-adjust:97.9%;ascent-override:89.7%;descent-override:21.5%;line-gap-override:0%}
+@font-face{font-family:'Archivo Display Fallback';src:local('Arial Bold'),local('Arial'),local('Helvetica'),local('Liberation Sans');font-weight:400 900;size-adjust:114.8%;ascent-override:76.5%;descent-override:18.3%;line-gap-override:0%}
 :root{--ink:#4a2f3d;--pink:#a34c6b;--rose:#e8b9c8;--blush:#f8ebee;--paper:#fdf8f6;--mute:#725c68;--line:#f0dbe1;
---display:'Funnel Display Variable','Funnel Display Fallback',system-ui,sans-serif;--sans:'Funnel Sans Variable','Funnel Sans Fallback',system-ui,sans-serif;
+--display:'Archivo Variable','Archivo Display Fallback',system-ui,sans-serif;--sans:'Archivo Variable','Archivo Fallback',system-ui,sans-serif;--wide:112%;
 --x:5vw;--sec:clamp(4.5rem,9vw,8rem);--gap:clamp(1rem,2vw,1.6rem);--ease:cubic-bezier(.23,1,.32,1);--soft:0 18px 44px rgba(184,92,126,.12)}
 *{box-sizing:border-box;margin:0}
 html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
@@ -13,8 +13,8 @@ a,button,select,label{touch-action:manipulation}
 .btn,.burger,.nav nav a{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 main{overflow-x:clip}
 :focus-visible{outline:3px solid var(--pink);outline-offset:3px}
-h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.08;letter-spacing:-.02em;text-wrap:balance}
-h3{font-weight:580;line-height:1.15;letter-spacing:-.01em}
+h1,h2,h3{font-family:var(--display);font-stretch:var(--wide);font-weight:780;line-height:1.06;letter-spacing:-.022em;text-wrap:balance}
+h3{font-weight:720;line-height:1.15;letter-spacing:-.012em}
 p{text-wrap:pretty}
 .btn{display:inline-block;background:var(--pink);color:#fff;border:0;border-radius:999px;padding:.9rem 1.8rem;font:600 .98rem var(--sans);letter-spacing:.005em;text-decoration:none;cursor:pointer;transition:transform .16s var(--ease),background-color .15s ease,color .15s ease}
 @media(hover:hover) and (pointer:fine){.btn:hover{background:#8f3f5d}}
@@ -27,7 +27,7 @@ p{text-wrap:pretty}
 .row{display:flex;gap:.9rem;flex-wrap:wrap}
 
 .nav{position:fixed;inset:0 0 auto 0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:calc(.8rem + env(safe-area-inset-top,0px)) max(var(--x),env(safe-area-inset-right,0px)) .8rem max(var(--x),env(safe-area-inset-left,0px));background:var(--paper);border-bottom:1px solid var(--line);color:var(--ink)}
-.logo{font:650 1.2rem var(--display);letter-spacing:-.025em;text-decoration:none}
+.logo{font:800 1.12rem var(--display);font-stretch:var(--wide);letter-spacing:-.025em;text-decoration:none}
 .nav nav{display:flex;gap:1.7rem;align-items:center;font-size:.9rem}
 .nav nav a{text-decoration:none}
 .nav nav a:not(.btn){color:var(--mute);transition:color .15s ease}
@@ -60,7 +60,7 @@ p{text-wrap:pretty}
 .w{display:inline-block;transition:opacity .5s var(--ease),transform .5s var(--ease);transition-delay:calc(.15s + var(--i,0) * 20ms)}
 :where(.js) .hero:not(.in) .w{opacity:0;transform:translateY(.28em)}
 .kicker{color:var(--pink);font-size:1rem;font-weight:600;margin-bottom:1.2rem}
-.hero h1{font-size:clamp(2.6rem,6vw,4.75rem);font-weight:680;line-height:1.02;letter-spacing:-.032em;margin-bottom:1.4rem}
+.hero h1{font-size:clamp(2.4rem,5.4vw,4.3rem);font-weight:850;line-height:1.05;letter-spacing:-.028em;margin-bottom:1.4rem}
 .hero em{color:var(--pink);font-style:normal}
 .lead{max-width:42ch;color:var(--mute);margin-bottom:2.2rem;font-size:clamp(1.06rem,1.3vw,1.2rem);line-height:1.55}
 
@@ -71,7 +71,7 @@ p{text-wrap:pretty}
 .hp3{width:36%;height:56%;right:0;top:34%}
 
 .sec{padding:var(--sec) var(--x);max-width:1240px;margin:auto}
-.sec h2,.band h2{font-size:clamp(2rem,4.4vw,3.25rem);letter-spacing:-.028em;margin-bottom:1rem}
+.sec h2,.band h2{font-size:clamp(1.9rem,4vw,3rem);letter-spacing:-.025em;margin-bottom:1rem}
 .band h2{text-align:center}
 .sec h2.left{text-align:left}
 .sub{color:var(--mute);margin:0 0 2.5rem;max-width:52ch}
@@ -101,7 +101,7 @@ p{text-wrap:pretty}
 .item.star{background:#fff;border:1px solid var(--line);border-radius:16px;padding:1.6rem 1.4rem;margin:.6rem -1.4rem}
 .item h3{font-size:1.45rem;display:flex;align-items:center;flex-wrap:wrap;gap:.4rem .8rem}
 .item p{color:var(--mute);font-size:.95rem;margin-top:.2rem}
-.item strong{font:600 clamp(1.7rem,3vw,2.2rem) var(--display);letter-spacing:-.03em;color:var(--ink);font-variant-numeric:tabular-nums}
+.item strong{font:800 clamp(1.6rem,2.8vw,2.1rem) var(--display);font-stretch:var(--wide);letter-spacing:-.03em;color:var(--ink);font-variant-numeric:tabular-nums}
 .item.star strong{color:var(--pink)}
 .tag{font:600 .75rem var(--sans);letter-spacing:0;background:var(--pink);color:#fff;padding:.25rem .7rem;border-radius:999px}
 
@@ -128,8 +128,8 @@ input:user-invalid,select:user-invalid{border-color:#b3261e}
 form .btn{margin-top:.4rem}
 .foot{background:var(--blush);color:var(--mute);font-size:.92rem;padding:clamp(2.5rem,6vw,4rem) var(--x) max(1.6rem,env(safe-area-inset-bottom,0px))}
 .foot-in{max-width:1240px;margin:auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1.3fr;gap:2rem clamp(1.5rem,4vw,3rem)}
-.foot-logo{font:650 1.3rem var(--display);letter-spacing:-.02em;color:var(--ink);margin-bottom:.6rem}
-.foot-h{font:600 1.05rem var(--display);color:var(--ink);margin-bottom:.8rem}
+.foot-logo{font:800 1.25rem var(--display);font-stretch:var(--wide);letter-spacing:-.02em;color:var(--ink);margin-bottom:.6rem}
+.foot-h{font:700 1rem var(--display);font-stretch:var(--wide);color:var(--ink);margin-bottom:.8rem}
 .foot ul{list-style:none;padding:0;display:grid;gap:.5rem}
 .foot address{font-style:normal}.foot address p{margin-bottom:.8rem}
 .foot a{text-decoration:none;overflow-wrap:anywhere}
@@ -146,13 +146,13 @@ form .btn{margin-top:.4rem}
 .rating-wrap{margin-bottom:2.5rem}
 .rating{display:inline-flex;align-items:center;gap:.7rem;flex-wrap:wrap;justify-content:center;background:#fff;border:1px solid var(--line);border-radius:999px;padding:.5rem 1.3rem;font-size:.9rem;color:var(--mute);text-decoration:none;transition:border-color .2s}
 @media(hover:hover) and (pointer:fine){.rating:hover{border-color:var(--rose)}}
-.rating b{font:600 1.5rem var(--display);color:var(--ink);letter-spacing:-.02em}
+.rating b{font:800 1.45rem var(--display);font-stretch:var(--wide);color:var(--ink);letter-spacing:-.02em}
 .stars{display:inline-flex;gap:.1em;color:var(--pink);font-size:.95rem;line-height:1}
 .stars svg{width:1em;height:1em;fill:currentColor}
 .revs{columns:3 280px;column-gap:clamp(1.5rem,3vw,2.5rem)}
 .rev{break-inside:avoid;margin:0 0 2.2rem;display:flex;flex-direction:column;gap:.8rem;padding-top:1.2rem;border-top:2px solid var(--rose)}
 .rev.lead-q{column-span:all;border:0;padding:0;margin-bottom:3rem;max-width:46ch}
-.rev.lead-q blockquote p{font:450 clamp(1.3rem,2.3vw,1.7rem)/1.32 var(--display);letter-spacing:-.018em}
+.rev.lead-q blockquote p{font:500 clamp(1.25rem,2.2vw,1.6rem)/1.35 var(--sans);letter-spacing:-.012em}
 .rev blockquote p{color:var(--ink);font-size:.98rem;line-height:1.6}
 .rev figcaption{margin-top:auto;display:flex;flex-direction:column;font-size:.85rem;color:var(--mute)}
 .rev figcaption b{color:var(--pink);font-size:.95rem}
@@ -160,7 +160,7 @@ form .btn{margin-top:.4rem}
 .proof{background:var(--blush);padding:1.4rem var(--x)}
 .proof ul{list-style:none;padding:0;max-width:1240px;margin:auto;display:flex;flex-wrap:wrap;justify-content:space-between;gap:.6rem 2rem;align-items:baseline}
 .proof li{display:flex;align-items:baseline;gap:.45rem;color:var(--ink)}
-.proof strong{font:600 1.6rem var(--display);letter-spacing:-.03em;color:var(--pink)}
+.proof strong{font:800 1.5rem var(--display);font-stretch:var(--wide);letter-spacing:-.03em;color:var(--pink)}
 .proof .stars{align-self:center}
 
 /* ===== Responsive ===== */
