@@ -1,8 +1,5 @@
 import { createRoot, hydrateRoot } from 'react-dom/client'
-import '@fontsource-variable/bricolage-grotesque/opsz.css'
-import '@fontsource/dm-sans/400.css'
-import '@fontsource/dm-sans/500.css'
-import '@fontsource/dm-sans/700.css'
+import '@fontsource-variable/archivo/wdth.css'
 import App from './App.jsx'
 import './App.css'
 const root = document.getElementById('root')
