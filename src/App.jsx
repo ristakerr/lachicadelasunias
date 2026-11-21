@@ -71,6 +71,20 @@ export default function App() {
   }, [])
   const close = () => setMenu(false)
 
+  // WhatsApp flotante: se aparta cuando ya hay otro botón de WhatsApp a la vista
+  const [waHide, setWaHide] = useState(false)
+  useEffect(() => {
+    const zonas = document.querySelectorAll('#eventos, #reserva, .foot')
+    if (!zonas.length || !('IntersectionObserver' in window)) return
+    const visibles = new Set()
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => { if (en.isIntersecting) visibles.add(en.target); else visibles.delete(en.target) })
+      setWaHide(visibles.size > 0)
+    }, { threshold: 0.1 })
+    zonas.forEach((z) => io.observe(z))
+    return () => io.disconnect()
+  }, [])
+
   const enviar = (e) => {
     e.preventDefault()
     const msg = `Hola! Soy ${f.nombre}. Quiero reservar un turno.\nServicio: ${f.servicio}\nFecha: ${f.fecha || 'a coordinar'}\nTurno: ${f.turno || 'a coordinar'}`
@@ -240,6 +254,13 @@ export default function App() {
         </div>
         <p className="foot-copy">© {new Date().getFullYear()} La chica de las uñas · Uñas semipermanentes y capping gel en Buenos Aires</p>
       </footer>
+      <a className={`wa-float${waHide ? ' is-hidden' : ''}`} href={`https://wa.me/${WA}?text=${encodeURIComponent('¡Hola! Quiero consultar por un turno.')}`}
+        target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp" tabIndex={waHide ? -1 : undefined}>
+        <picture>
+          <source srcSet="/whatsapp.webp" type="image/webp" />
+          <img src="/whatsapp.png" alt="" width="64" height="64" />
+        </picture>
+      </a>
     </>
   )
 }
